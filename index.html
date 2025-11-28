@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1 class="game-title">Tic Tac Toe</h1>
+
+      <div class="score-board">
+        <div class="score-box player-x">
+          <span class="player-name">Oyuncu X</span>
+          <span class="score" id="score-x">0</span>
+        </div>
+        <div class="score-box player-o">
+          <span class="player-name">Oyuncu O</span>
+          <span class="score" id="score-o">0</span>
+        </div>
+      </div>
+
+      <div class="game-status" id="game-status">Sıra: X</div>
+
+      <div
+        class="game-grid"
+        id="game-grid"
+        role="grid"
+        aria-label="Tic Tac Toe Oyun Alanı"
+      >
+        <!-- Hücreler JS ile dinamik oluşturulabilir veya statik olabilir. Statik yapıp JS ile yöneteceğim. -->
+        <button class="cell" data-index="0" aria-label="Hücre 0"></button>
+        <button class="cell" data-index="1" aria-label="Hücre 1"></button>
+        <button class="cell" data-index="2" aria-label="Hücre 2"></button>
+        <button class="cell" data-index="3" aria-label="Hücre 3"></button>
+        <button class="cell" data-index="4" aria-label="Hücre 4"></button>
+        <button class="cell" data-index="5" aria-label="Hücre 5"></button>
+        <button class="cell" data-index="6" aria-label="Hücre 6"></button>
+        <button class="cell" data-index="7" aria-label="Hücre 7"></button>
+        <button class="cell" data-index="8" aria-label="Hücre 8"></button>
+      </div>
+
+      <button id="restart-btn" class="btn-restart">Oyunu Yeniden Başlat</button>
+    </main>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
