@@ -38,8 +38,6 @@ This project requires no dependencies or installation. You can run it directly i
 
 [Click Here to Play](https://tic-tac-toeeeeeeeeee.netlify.app/)
 
-<a href="https://tic-tac-toeeeeeeeeee.netlify.app/" target="_blank">Click Here to Play</a>
-
 ## License
 
 This project is licensed under the MIT License.
