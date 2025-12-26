@@ -12,6 +12,7 @@ const difficultyButtons = document.querySelectorAll('.diff-btn');
 let board = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X";
 let isGameRunning = false;
+let isProcessingMove = false; // Lock flag to prevent race condition
 let scores = { X: 0, O: 0 };
 
 // Game Settings
@@ -104,8 +105,8 @@ function selectDifficulty(difficulty) {
 function handleCellClick() {
     const cellIndex = parseInt(this.getAttribute("data-index"));
     
-    // Ignore if cell is taken or game is over
-    if (board[cellIndex] !== "" || !isGameRunning) {
+    // Ignore if cell is taken, game is over, or a move is being processed
+    if (board[cellIndex] !== "" || !isGameRunning || isProcessingMove) {
         return;
     }
     
@@ -232,6 +233,7 @@ function updateScore(winner) {
 function restartGame() {
     currentPlayer = "X";
     board = ["", "", "", "", "", "", "", "", ""];
+    isProcessingMove = false; // Reset processing lock
     updateStatus(`Turn: ${currentPlayer}`);
     
     cells.forEach(cell => {
@@ -388,8 +390,12 @@ function minimax(boardState, depth, isMaximizing, alpha, beta) {
 /**
  * Handles player move in Impossible mode
  * AI will cheat by relocating player's move if needed
+ * Uses isProcessingMove flag to prevent race conditions
  */
 function handleImpossibleMove(cellIndex) {
+    // Lock to prevent concurrent move processing
+    isProcessingMove = true;
+    
     // First, make the player's move normally
     makeMove(cellIndex, HUMAN);
     
@@ -405,7 +411,10 @@ function handleImpossibleMove(cellIndex) {
             statusText.classList.remove('thinking', 'evil');
             
             // Check game state after cheating
-            if (checkGameEnd()) return;
+            if (checkGameEnd()) {
+                isProcessingMove = false;
+                return;
+            }
             
             // Now AI makes its move
             setTimeout(() => {
@@ -413,17 +422,24 @@ function handleImpossibleMove(cellIndex) {
                 setTimeout(() => {
                     makeAIMove();
                     statusText.classList.remove('thinking', 'evil');
+                    // Unlock after all operations complete
+                    isProcessingMove = false;
                 }, 300);
             }, 200);
         }, 500);
     } else {
         // No need to cheat this time, just make AI move
-        if (checkGameEnd()) return;
+        if (checkGameEnd()) {
+            isProcessingMove = false;
+            return;
+        }
         
         statusText.classList.add('thinking', 'evil');
         setTimeout(() => {
             makeAIMove();
             statusText.classList.remove('thinking', 'evil');
+            // Unlock after AI move completes
+            isProcessingMove = false;
         }, 400);
     }
 }
