@@ -20,6 +20,7 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -230,6 +231,34 @@ body {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
+}
+
+/* Footer / Sign */
+.sign {
+    margin-top: auto;
+    padding: 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.sign a {
+    color: var(--accent-red);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.sign a:hover {
+    color: #ff4444;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+}
+
+.sign a:focus {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 2px;
+    border-radius: 3px;
 }
 
 /* Media queries for larger screens */
